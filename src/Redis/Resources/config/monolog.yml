@@ -1,0 +1,35 @@
+parameters:
+    chang.packages.redis.monolog:
+        dsn: redis://127.0.0.1/0
+        options: []
+        key: monolog
+        level: debug
+
+services:
+    chang.redis.monolog_client:
+        class: Redis
+        factory: ['Chang\Redis\Factory\PhpredisClientFactory', 'create']
+        arguments:
+            - '@=service("chang.option_resolver").get("redis.monolog.dsn")'
+            - '@=service("chang.option_resolver").get("redis.monolog.options")'
+
+    chang.redis.monolog_handler:
+        class: Monolog\Handler\RedisHandler
+        arguments:
+            - '@chang.redis.monolog_client'
+            - '@=service("chang.option_resolver").get("redis.monolog.key")'
+            - '@=service("chang.option_resolver").get("redis.monolog.level")'
+
+# check to make sure
+# ./bin/console debug:config monolog
+# TODO: Checker Command
+monolog:
+    handlers:
+        chang_redis:
+            type: service
+            id: chang.redis.monolog_handler
+#        main:
+#            handler: chang_redis
+
+imports:
+    - { resource: ./checker.yml }

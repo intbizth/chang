@@ -1,0 +1,69 @@
+parameters:
+    chang.packages.security_audit.compilers:
+    - Chang\SecurityAudit\Compiler\SessionStorageCompilePass
+
+imports:
+- { resource: ./grid.yml }
+
+sylius_resource:
+    resources:
+        chang.security_audit_login:
+            classes:
+                model: Chang\SecurityAudit\Model\Login
+                interface: Chang\SecurityAudit\Model\LoginInterface
+                repository: Chang\SecurityAudit\Doctrine\ORM\AuditRepository
+doctrine:
+    orm:
+        mappings:
+            ChangSecurityAudit:
+                type: xml
+                is_bundle: false
+                prefix: Chang\SecurityAudit\Model
+                dir: '%chang.dir%/SecurityAudit/Resources/config/doctrine/model'
+framework:
+    translator:
+        paths:
+        - '%chang.dir%/SecurityAudit/Resources/translations'
+twig:
+    paths:
+        '%chang.dir%/SecurityAudit/Resources/views': SecurityAudit
+
+#security:
+#    firewalls:
+#        XXX:
+#            logout:
+#                handlers: [chang.security_audit.login_audit_listener]
+
+services:
+    Chang\SecurityAudit\AuditManagerInterface:
+        alias: 'chang.security_audit.audit_manager'
+
+    chang.security_audit.session_storage:
+        alias: '@session.storage.native'
+
+    chang.security_audit.login_audit_listener:
+        class: Chang\SecurityAudit\EventListener\LoginAuditListener
+        tags:
+        - { name: kernel.event_listener, event: security.interactive_login, method: onLoginSuccess }
+        - { name: kernel.event_listener, event: sylius.user.security.implicit_login, method: onLoginSuccess }
+        arguments:
+        - '@chang.security_audit.audit_manager'
+        - '@chang.security_audit.session_storage'
+        - '@event_dispatcher'
+
+    chang.security_audit.audit_manager:
+        class: Chang\SecurityAudit\AuditManager
+        arguments:
+        - '@chang.geo_ip.data_source'
+        - '@security.token_storage'
+        - '@chang.factory.security_audit_login'
+        - '@chang.manager.security_audit_login'
+        - '@chang.repository.security_audit_login'
+        - '@security.firewall.map'
+
+    chang.security_audit.kick_controller:
+        class: Chang\SecurityAudit\KickingOutController
+        public: true
+        arguments:
+        - '@chang.security_audit.session_storage'
+        - '@chang.security_audit.audit_manager'

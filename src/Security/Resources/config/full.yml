@@ -1,0 +1,4 @@
+imports:
+    - { resource: ./generic.yml }
+    - { resource: ./password_strength.yml }
+    - { resource: ./reserved_word.yml }

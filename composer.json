@@ -1,0 +1,61 @@
+{
+  "name": "intbizth/chang",
+  "description": "Symfony 4 Bundler.",
+  "license": "MIT",
+  "type": "symfony-bundle",
+  "homepage": "http://github.com/intbizth/chang",
+  "authors": [
+        {
+            "name": "Ishmael Doss",
+            "email": "nukboon@gmail.com"
+        }
+    ],
+  "autoload": {
+    "psr-4": {
+      "Chang\\": "src"
+    }
+  },
+  "require": {
+    "php": "^7.2",
+    "ext-json": "*",
+    "adbario/php-dot-notation": "^2.0",
+    "beberlei/DoctrineExtensions": "^1.1",
+    "bjeavons/zxcvbn-php": "^0.3.0",
+    "fzaninotto/faker": "^1.7",
+    "knplabs/knp-menu-bundle": "^2.2",
+    "minishlink/web-push": "^4.0",
+    "php-http/httplug-pack": "^1.1",
+    "phpmob/media-bundle": "^1.0",
+    "phpmob/settings-bundle": "^1.0",
+    "phpmob/twig-modify-bundle": "^2.0",
+    "ramsey/uuid": "^3.7",
+    "richardfullmer/rabbitmq-management-api": "^2.0",
+    "sly/notification-pusher": "^2.3",
+    "sylius/fixtures-bundle": "^1.2",
+    "sylius/mailer-bundle": "^1.2",
+    "sylius/grid-bundle": "^1.2",
+    "sylius/resource-bundle": "^1.2",
+    "sylius/user-bundle": "^1.2",
+    "twig/extensions": "^1.5",
+    "symfony/security-bundle": "4.3.*",
+    "symfony/swiftmailer-bundle": "^3.2"
+  },
+  "require-dev": {
+    "geoip2/geoip2": "^2.9",
+    "phpspec/phpspec": "^4.0",
+    "phpunit/phpunit": "^5.6",
+    "symfony/symfony": "^4.3"
+  },
+  "suggest": {
+  },
+  "config": {
+    "sort-packages": true,
+    "bin-dir": "bin"
+  },
+  "bin": ["chang"],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    }
+  }
+}

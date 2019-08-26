@@ -1,0 +1,31 @@
+version: '2'
+# http://goinbigdata.com/docker-run-vs-cmd-vs-entrypoint/
+
+services:
+    node:
+        build: node
+        depends_on:
+            - rabbitmq
+        ports:
+            - "EDIT_ME_SOCKET_PORT:8080"
+        links:
+            - rabbitmq
+        working_dir: /var/www/node
+        volumes:
+            - ./node/service:/var/www/node
+            - ./var/logs:/var/www/node/logs
+        environment:
+            - LOG_FILE_SIZE=1m
+            - LOG_FILE_NAME=node-%DATE%.log
+            - LOG_DIR=./logs
+            - AMQP_QUEUES=socket,worker
+            - AMQP_HOST=amqp://EDIT_ME_RABBITMQ_USER:EDIT_ME_RABBITMQ_PASS@chang_rabbitmq:EDIT_ME_RABBITMQ_PORT_AMQP
+
+    rabbitmq:
+        build: rabbitmq
+        container_name: chang_rabbitmq
+        volumes:
+            - ./var/rabbitmq:/var/lib/rabbitmq
+        ports:
+            - "EDIT_ME_RABBITMQ_PORT_AMQP:5672"
+            - "EDIT_ME_RABBITMQ_PORT_HTTP:15672"

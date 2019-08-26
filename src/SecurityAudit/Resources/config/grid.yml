@@ -1,0 +1,35 @@
+sylius_grid:
+    grids:
+        security_audit_grid:
+            driver:
+                options:
+                    class: "%chang.model.security_audit_login.class%"
+                    repository:
+                        method: createQueryBuilderByUsername
+                        arguments: [ expr:service('security.token_storage').getToken().getUser().getUsername() ]
+            limits: [10]
+            sorting:
+                loginAt: desc
+            fields:
+                loginAt:
+                    type: datetime
+                    sortable: ~
+                    enabled: false
+                timing:
+                    type: tpl
+                    label: chang.ui.security_audit.timing
+                    path: .
+                    options:
+                        template: '@SecurityAudit/grid/field/timing.html.twig'
+                location:
+                    type: tpl
+                    label: chang.ui.security_audit.location
+                    path: .
+                    options:
+                        template: '@SecurityAudit/grid/field/location.html.twig'
+                action:
+                    type: tpl
+                    label: chang.ui.security_audit.action
+                    path: .
+                    options:
+                        template: '@SecurityAudit/grid/field/action.html.twig'

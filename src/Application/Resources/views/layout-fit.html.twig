@@ -1,0 +1,67 @@
+{% do ctx_page.set('css.layout', 'layout-fit') %}
+{% extends '@chang/layout.html.twig' %}
+
+{% block brand %}
+    <a class="site-url" href="{{ ctx_page.get('site.url') }}">
+        {% set name = ctx_page.get('site.name')|trans %}
+        {% set logo = ctx_page.get('site.logo_square') %}
+        {% if logo %}
+            <img class="site-logo mr-1" src="{{ logo }}" height="28" alt="{{ name }}">
+        {% endif %}
+        <h6 class="site-name d-inline m-0">{{ name }}</h6>
+    </a>
+{% endblock %}
+
+{% block body %}
+    <div class="app">
+        {% block header %}{{ parent() }}{% endblock %}
+        {% block aside %}{{ parent() }}{% endblock %}
+        <main class="app-main">
+            <div class="wrapper">
+                {% block page %}
+                    <div class="page">
+                        <div class="page-inner page-inner-fill">
+                            {% block navs %}
+                                <header class="page-navs bg-white py-2 pr-2 mb-2">
+                                    <div class="media align-items-center">
+                                        <div class="tile tile-circle mr-3">
+                                            <i class="{{ ctx_page.get('page.icon', 'far fa-file') }}"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <h1 class="card-title mb-0">{{ ctx_page.get('page.headline', 'page.headline') }}</h1>
+                                            <h6 class="card-subtitle text-muted mt-1">{{ ctx_page.get('page.description', 'page.description') }}</h6>
+                                        </div>
+                                        <div class="ml-auto">
+                                            {% block actions %}{% endblock %}
+                                        </div>
+                                    </div>
+                                </header>
+                            {% endblock %}
+                            {% block breadcrumb %}
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb px-2">
+                                        <li class="breadcrumb-item active">
+                                            <a href="user-profile.html">
+                                                <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Beni Arisandi
+                                            </a>
+                                        </li>
+                                    </ol>
+                                </nav>
+                            {% endblock %}
+                            {% block page_title %}
+                                <header class="page-title-bar">
+                                    {% block page_title_bar %}{% endblock %}
+                                </header>
+                            {% endblock %}
+                            <div class="page-section">
+                                {% block flash %}{{ include('@chang/_flash.html.twig') }}{% endblock %}
+                                {% block alert %}{% endblock %}
+                                {% block content %}{% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                {% endblock %}
+            </div>
+        </main>
+    </div>
+{% endblock %}
