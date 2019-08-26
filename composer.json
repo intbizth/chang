@@ -5,11 +5,11 @@
   "type": "symfony-bundle",
   "homepage": "http://github.com/intbizth/chang",
   "authors": [
-        {
-            "name": "Ishmael Doss",
-            "email": "nukboon@gmail.com"
-        }
-    ],
+    {
+      "name": "Ishmael Doss",
+      "email": "nukboon@gmail.com"
+    }
+  ],
   "autoload": {
     "psr-4": {
       "Chang\\": "src"
@@ -37,14 +37,14 @@
     "sylius/resource-bundle": "^1.2",
     "sylius/user-bundle": "^1.2",
     "twig/extensions": "^1.5",
-    "symfony/security-bundle": "4.3.*",
+    "symfony/security-bundle": "4.2.*",
     "symfony/swiftmailer-bundle": "^3.2"
   },
   "require-dev": {
     "geoip2/geoip2": "^2.9",
     "phpspec/phpspec": "^4.0",
     "phpunit/phpunit": "^5.6",
-    "symfony/symfony": "^4.3"
+    "symfony/symfony": "^4.1"
   },
   "suggest": {
   },
@@ -52,7 +52,9 @@
     "sort-packages": true,
     "bin-dir": "bin"
   },
-  "bin": ["chang"],
+  "bin": [
+    "chang"
+  ],
   "extra": {
     "branch-alias": {
       "dev-master": "1.0-dev"
